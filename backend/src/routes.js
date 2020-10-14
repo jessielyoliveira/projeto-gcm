@@ -8,5 +8,6 @@ routes.post('/addclient', ClientController.create);
 routes.get('/list', ClientController.list);
 routes.delete('/delete', ClientController.delete);
 routes.post('/credit', OperationsController.credit);
+routes.post('/debit', OperationsController.debit);
 
 module.exports = routes;

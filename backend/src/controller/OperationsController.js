@@ -18,5 +18,22 @@ module.exports = {
     }catch(err){
         return response.status(400).json({ error: err.message });
     }    
+  },
+  async debit(request, response){
+    const {account, debit} = request.body;
+    const {balance:oldBalance} = await connection('clients').where('account', account).select('balance').first();
+
+    if( debit >= oldBalance ){
+      return response.status(401).json({ error: 'Você não possui saldo suficiente' });
+    }
+    try{    
+      const balance = oldBalance - debit;
+      await connection('clients').where('account', account).update({
+        balance: balance
+      })
+      return response.json(balance);
+    }catch(err){
+      return response.status(400).json({ error: err.message });
+    }    
   }
 };
