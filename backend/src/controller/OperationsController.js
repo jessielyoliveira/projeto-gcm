@@ -4,17 +4,19 @@ module.exports = {
 
 	async credit(request, response) {
 		const { account, deposit } = request.body;
+		console.log(deposit);
 		if (deposit <= 0) {
 			return response.status(401).json({ error: 'Operação não permitida' });
 		}
 		try {
-			const { balance: oldBalance } = await connection('clients').where('account', account).select('balance').first();
-			const credit = oldBalance + deposit;
+			const { balance: currentBalance } = await connection('clients').where('account', account).select('balance').first();
+			const newBalance = parseFloat(currentBalance) + parseFloat(deposit);
+			console.log(newBalance);
 
 			await connection('clients').where('account', account).update({
-				balance: credit
+				balance: newBalance
 			})
-			return response.json({ credit });
+			return response.json({ newBalance });
 		} catch (err) {
 			return response.status(400).json({ error: err.message });
 		}
@@ -22,17 +24,17 @@ module.exports = {
 
 	async debit(request, response) {
 		const { account, debit } = request.body;
-		const { balance: oldBalance } = await connection('clients').where('account', account).select('balance').first();
+		const { balance: currentBalance } = await connection('clients').where('account', account).select('balance').first();
 
-		if (debit > oldBalance) {
+		if (parseFloat(debit) > currentBalance || debit == 0) {
 			return response.status(401).json({ error: 'Você não possui saldo suficiente' });
 		}
 		try {
-			const balance = oldBalance - debit;
+			const newBalance = parseFloat(currentBalance) - parseFloat(debit);
 			await connection('clients').where('account', account).update({
-				balance: balance
+				balance: newBalance
 			})
-			return response.json(balance);
+			return response.json({ newBalance });
 		} catch (err) {
 			return response.status(400).json({ error: err.message });
 		}
@@ -55,8 +57,8 @@ module.exports = {
 	
 		const { balance: balanceAccountCredit } = await connection('clients').where('account', accountCredit).select('balance').first();
 		
-		const newBalanceAccountDebit = balanceAccountDebit - value;
-		const newBalanceAccountCredit = balanceAccountCredit + value;
+		const newBalanceAccountDebit = parseFloat(balanceAccountDebit) - parseFloat(value);
+		const newBalanceAccountCredit = parseFloat(balanceAccountCredit) + parseFloat(value);
 
 		await connection('clients').where('account', accountDebit).update({ balance: newBalanceAccountDebit })
 		await connection('clients').where('account', accountCredit).update({ balance: newBalanceAccountCredit })
@@ -66,7 +68,7 @@ module.exports = {
 
 	async getBalance(request, response) {
 		const { account } = request.body;
-		const client = await connection('clients').where('account', account).select('*').first();
+		const client = await connection('clients').where('account', account).select('*');
 
 		if(client == undefined) { return response.status(401).json({ error: 'Conta inexistente' }) }
 

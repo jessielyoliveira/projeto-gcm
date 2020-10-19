@@ -12,10 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "cors": "^2.8.5",
     "knex": "^0.21.6",
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.8",
     "jest": "^26.5.3",
     "nodemon": "^2.0.4",
     "supertest": "^5.0.0"
