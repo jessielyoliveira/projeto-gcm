@@ -8,10 +8,10 @@ export default function Choice(){
      <div className="register-container">
        <div className="content">
         <form>
-          <Link to="/Credit">
+          <Link to="/credit">
             <button className="button" type="submit">Credito</button>
           </Link>
-          <Link to="/">
+          <Link to="/debit">
             <button className="button" type="submit">Debito</button>
           </Link> 
             <button className="button" type="submit">Transferência</button>
