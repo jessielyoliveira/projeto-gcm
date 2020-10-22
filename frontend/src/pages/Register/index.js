@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './styles.css';
 import api from '../../services/api';
+import { Link } from 'react-router-dom';
 
 export default function Register(){
   const [account, setAccount] = useState('');
@@ -43,6 +44,9 @@ export default function Register(){
               onChange={e => setBalance(e.target.value)}
             />
             <button className="button" type="submit">Registrar</button>
+            <Link to="/">
+              <button className="return-button">Voltar ao Menu</button> 
+            </Link>
          </form>
        </div>
      </div> 
