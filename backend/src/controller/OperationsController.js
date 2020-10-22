@@ -68,10 +68,10 @@ module.exports = {
 
 	async getBalance(request, response) {
 		const { account } = request.body;
-		const client = await connection('clients').where('account', account).select('*');
+		const { balance: balance }= await connection('clients').where('account', account).select('balance').first() || {};
 
-		if(client == undefined) { return response.status(401).json({ error: 'Conta inexistente' }) }
+		if(balance == undefined) { return response.status(401).json({ error: 'Conta inexistente' }) }
 
-		return response.json({ client });
+		return response.json({ balance });
 	}
 };
