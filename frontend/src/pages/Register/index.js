@@ -17,7 +17,7 @@ export default function Register(){
 
     try{
       const response = await api.post('addclient', data);
-      alert(`${response.data.name} cadastrado com sucesso:`);
+      alert(`${response.data.name} cadastrado com sucesso.`);
     }catch(err){
       alert('Erro no cadastro');
     }  
