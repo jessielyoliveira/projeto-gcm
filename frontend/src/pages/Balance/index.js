@@ -13,7 +13,7 @@ export default function Balance() {
 
 		try {
 			const response = await api.post('balance', data);
-			alert(`Saldo = ${response.client.balance}`);
+			alert(`Saldo = ${response.data.balance}`);
 		} catch (err) {
 			alert('Conta inexistente.');
 		}
