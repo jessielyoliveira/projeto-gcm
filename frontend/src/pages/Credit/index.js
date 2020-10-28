@@ -16,7 +16,7 @@ export default function Credit(){
 
       try{
         const response = await api.post('credit', data);
-        alert(`Deposito realizado com sucesso, o saldo atual da conta é ${response.data.newBalance}`);
+        alert(`Depósito realizado com sucesso, o saldo atual da conta é ${response.data.newBalance}`);
       }catch(err){
         alert('Erro na transferência');
       }  
@@ -31,11 +31,11 @@ export default function Credit(){
                 onChange={e => setAccount(e.target.value)}
               />
               <input 
-                placeholder="Valor do deposito"
+                placeholder="Valor do depósito"
                 value={deposit}
                 onChange={e => setDeposit(e.target.value)}
               />
-              <button className="button" type="submit">Fazer deposito</button>
+              <button className="button" type="submit">Fazer depósito</button>
             <div id="button">
               <Link to="/">
                 <button className="return-button">Voltar ao Menu</button> 
