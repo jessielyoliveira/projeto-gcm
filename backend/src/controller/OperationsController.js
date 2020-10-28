@@ -4,7 +4,9 @@ module.exports = {
 
 	async credit(request, response) {
 		const { account, deposit } = request.body;
-		console.log(deposit);
+		let bonus;
+		bonus = deposit/100;
+		console.log(bonus);
 		if (deposit <= 0) {
 			return response.status(401).json({ error: 'Operação não permitida' });
 		}
