@@ -3,17 +3,20 @@ const connection = require('../database/connection');
 module.exports = {
 
 	async credit(request, response) {
-		const { account, deposit } = request.body;
+		let { account, deposit } = request.body;
 		let bonus;
 		bonus = deposit/100;
 		console.log(bonus);
+		deposit = bonus+deposit;
+		//console.log(deposit);
+
 		if (deposit <= 0) {
 			return response.status(401).json({ error: 'Operação não permitida' });
 		}
 		try {
 			const { balance: currentBalance } = await connection('clients').where('account', account).select('balance').first();
 			const newBalance = parseFloat(currentBalance) + parseFloat(deposit);
-			console.log(newBalance);
+			//console.log(newBalance);
 
 			await connection('clients').where('account', account).update({
 				balance: newBalance
