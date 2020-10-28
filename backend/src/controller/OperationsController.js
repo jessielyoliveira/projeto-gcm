@@ -8,7 +8,6 @@ module.exports = {
 		bonus = deposit/100;
 		console.log(bonus);
 		deposit = bonus+deposit;
-		//console.log(deposit);
 
 		if (deposit <= 0) {
 			return response.status(401).json({ error: 'Operação não permitida' });
@@ -21,7 +20,7 @@ module.exports = {
 			await connection('clients').where('account', account).update({
 				balance: newBalance
 			})
-			return response.json({ newBalance });
+			return response.json({ newBalance, bonus });
 		} catch (err) {
 			return response.status(400).json({ error: err.message });
 		}
