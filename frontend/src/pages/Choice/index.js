@@ -12,7 +12,7 @@ export default function Choice(){
             <button className="button" type="submit">Criar Conta</button>
           </Link>
           <Link to="/credit">
-            <button className="button" type="submit">Credito</button>
+            <button className="button" type="submit">Depósito</button>
           </Link>
           <Link to="/debit">
             <button className="button" type="submit">Debito</button>

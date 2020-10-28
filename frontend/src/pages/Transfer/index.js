@@ -34,7 +34,7 @@ export default function Transfer() {
 					/>
 					<input
 						type="text"
-						placeholder="Nome do conta de crédito"
+						placeholder="Nome do conta de depósito"
 						value={accountCredit}
 						onChange={e => setAccountCredit(e.target.value)} />
 					<input
