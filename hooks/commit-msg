@@ -1,18 +1,25 @@
 #!/bin/bash
 #curl -H "Authorization: token 323f10206117840822c9a316245833dd1768996a" https://api.github.com
 
+# Dados do repositório
+user="jessielyoliveira"
+repo="projeto-gcm"
+
 msgCommit=$(cat $1)
 pattern=#[0-9]
 
 if [[ ! $msgCommit =~ $pattern ]];
 then
-    echo "O commit deve iniciar com #{numero_da_issue}"
+    echo "O commit deve estar no padrão: #{numero_da_issue} - {mensagem}"
     exit 1
 fi
 
+# Separa só a primeira ocorrência de dígitos para identificar o número da issue
 numberIssue="$(echo $msgCommit | grep -o -E '[0-9]+')"
-url="https://api.github.com/repos/jessielyoliveira/gcm/issues/{$numberIssue}"
+numberIssue="$(echo $numberIssue | cut -f1 -d ' ')"
 
+# Pega os dados da issue na api do github
+url="https://api.github.com/repos/$user/$repo/issues/$numberIssue"
 jsonIssue=$(curl -s $url)
 
 # Verifica se possui issue com o número informado
