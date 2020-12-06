@@ -14,4 +14,4 @@ numberIssue="$(echo $numberIssue | cut -f1 -d ' ')"
 comment="Data: $(date +%d/%m/%y-%T) \nAutor: $(git config user.name) \nArquivos envolvidos: $(git diff --name-only HEAD HEAD~1) \nComentário do log: $msgCommit"
 
 # Realliza um post na api
-curl -X POST -H "Accept: application/vnd.github.v3+json " -H "Authorization: token 62ca54869d01cf4c95989941bf605ee7cda6a3a7" https://api.github.com/repos/$user/$repo/issues/$numberIssue/comments -d "{ \"body\":\"$comment\"}"
+curl -X POST -H "Accept: application/vnd.github.v3+json " -H "Authorization: token c49d922894242d0e925a9e423d27a6a911239774" https://api.github.com/repos/$user/$repo/issues/$numberIssue/comments -d "{ \"body\":\"$comment\"}"
