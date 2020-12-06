@@ -1,0 +1,35 @@
+#!/bin/bash
+#curl -H "Authorization: token 323f10206117840822c9a316245833dd1768996a" https://api.github.com
+
+msgCommit=$(cat $1)
+pattern=#[0-9]
+
+if [[ ! $msgCommit =~ $pattern ]];
+then
+    echo "O commit deve iniciar com #{numero_da_issue}"
+    exit 1
+fi
+
+numberIssue="$(echo $msgCommit | grep -o -E '[0-9]+')"
+url="https://api.github.com/repos/jessielyoliveira/gcm/issues/{$numberIssue}"
+
+jsonIssue=$(curl -s $url)
+
+# Verifica se possui issue com o número informado
+message="$(echo $jsonIssue | jq -r '.message')"
+if [ "$message" == "Not Found" ];
+then
+    echo "Não existe issue com o número informado."
+    exit 1
+fi
+
+# Verifica se a issue está aberta e atribuída a algum usuário
+state="$(echo $jsonIssue | jq -r '.state')"
+devs="$(echo $jsonIssue | jq -r '.assignees')"
+
+if [[ "$devs" == "[]" ]] || [[ "$state" != "open" ]];
+then
+    echo "Issue não está habilitada para desenvolvimento. É necessário estar aberta e atribuída à um usuário."
+    exit 1
+fi
+
