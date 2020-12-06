@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Dados do repositório
+user="jessielyoliveira"
+repo="projeto-gcm"
+
+msgCommit="$(git show --format='%B' -s $SHA1)"
+
+# Separa só a primeira ocorrência de dígitos para identificar o número da issue
+numberIssue="$(echo $msgCommit | grep -o -E '[0-9]+')"
+numberIssue="$(echo $numberIssue | cut -f1 -d ' ')"
+
+# Prepara o comentário
+comment="Data: $(date +%d/%m/%y-%T) \nAutor: $(git config user.name) \nArquivos envolvidos: $(git diff --name-only HEAD HEAD~1) \nComentário do log: $msgCommit"
+
+# Realliza um post na api
+curl -X POST -H "Accept: application/vnd.github.v3+json " -H "Authorization: token 7c14c03c2d60f8ea53a5eeec7a5a2fc7cff61dee" https://api.github.com/repos/$user/$repo/issues/$numberIssue/comments -d "{ \"body\":\"$comment\"}"

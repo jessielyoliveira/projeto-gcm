@@ -1,5 +1,4 @@
 #!/bin/bash
-#curl -H "Authorization: token 323f10206117840822c9a316245833dd1768996a" https://api.github.com
 
 # Dados do repositório
 user="jessielyoliveira"
